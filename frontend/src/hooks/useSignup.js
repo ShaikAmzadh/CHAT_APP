@@ -33,6 +33,8 @@ const useSignup = () => {
 
         //SET USER TO LOCALSTORAGE
         localStorage.setItem("chat-user",JSON.stringify(data))
+
+        toast.success("Signed up successfully")
         setAuthUser(data)
         
     } catch (error) {

@@ -8,17 +8,20 @@ const useLogin = () => {
     const {setAuthUser}=useAuthContext()
 
     const login=async ({userName,password})=>{
-        if(password.length<6){
-            toast.error("Password should contain atleast 6 characters")
-            return
-        }
+
         setLoading(true)
         try {
+            if(!userName || !password){
+                throw new Error("Missing fields")
+            }
+            if(password.length<6){
+                throw new Error("Password should be atleast of 6 characters")
+            }
            const res=await axios.post('/api/auth/login',{
             userName,password
            }) 
 
-           const data=await res.data
+           const data=res.data
 
            if(data.error){
             throw new Error(data.error)
@@ -30,7 +33,7 @@ const useLogin = () => {
 
            setAuthUser(data)
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error?.response?.data?.message || error.message || "Login failed")
         }finally{
             setLoading(false)
         }

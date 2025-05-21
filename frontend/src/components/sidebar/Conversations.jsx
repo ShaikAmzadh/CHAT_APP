@@ -1,49 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Conversation from "./Conversation";
+import useGetConversations from "../../hooks/useGetConversations.js";
 
 const Conversations = () => {
-  const [users, setUsers] = useState([
-    {
-      username: "Olsen",
-      profilePic: "/eolsen.webp",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/image1.jpg",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/image2.jpg",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/image3.jpg",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/image4.jpg_large",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/eolsen.webp",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/eolsen.webp",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/eolsen.webp",
-    },
-    {
-      username: "Olsen",
-      profilePic: "/eolsen.webp",
-    },
-  ]);
+  const { loading, conversations } = useGetConversations();
+
   return (
     <div className="py-2 flex flex-col overflow-auto">
-      {users.map((user) => (
-        <Conversation user={user} />
+      {conversations.map((conversation, idx) => (
+        <Conversation
+          key={conversation._id}
+          conversation={conversation}
+          lastIdx={idx === conversations.length - 1}
+        />
       ))}
     </div>
   );
