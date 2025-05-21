@@ -2,10 +2,11 @@ import React from "react";
 import useConversation from "../../zustand/useConversation.js";
 import { getRandomEmoji } from "../../utils/emojis.js";
 
-const Conversation = ({ conversation, lastIdx }) => {
+const Conversation = ({ conversation, lastIdx, onlineusers }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const emoji = getRandomEmoji();
   const isSelected = selectedConversation?._id === conversation._id;
+  const isOnline = onlineusers.includes(conversation._id);
   return (
     <>
       <div
@@ -14,7 +15,7 @@ const Conversation = ({ conversation, lastIdx }) => {
         }`}
         onClick={() => setSelectedConversation(conversation)}
       >
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 rounded-full">
             <img src={conversation.profilePic} />
           </div>

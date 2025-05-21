@@ -8,7 +8,8 @@ import userRoutes from './routes/userRoutes.route.js'
 
 import connectToMongoDB from './db/connectToMongoDB.js'
 
-const app=express()
+import {app,server,io} from './socket/socket.js'
+
 const port=process.env.PORT||5000
 
 // SO WE CAN USE .ENV VARIABLES IN THIS FILE
@@ -22,7 +23,7 @@ app.use("/api/messages",messageRoutes)
 app.use("/api/users",userRoutes)
 
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     connectToMongoDB()
     console.log(`Server running on port ${port}`);
     

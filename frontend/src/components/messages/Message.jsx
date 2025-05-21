@@ -2,13 +2,15 @@ import React from "react";
 import useConversation from "../../zustand/useConversation.js";
 import { useAuthContext } from "../../context/AuthContext.jsx";
 import { extractTime } from "../../utils/extractTime.js";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Message = ({ message }) => {
   const { selectedConversation } = useConversation();
   const { authUser } = useAuthContext();
 
   const fromMe = authUser._id === message.senderId;
-
+  const shakeClass = message.shouldShake ? "shake" : "";
   const time = extractTime(message.createdAt);
   return (
     <div className={`chat ${fromMe ? "chat-end" : "chat-start"}`}>
@@ -23,7 +25,11 @@ const Message = ({ message }) => {
         </div>
       </div>
 
-      <div className={`chat-bubble text-white ${fromMe ? "bg-blue-500" : ""}`}>
+      <div
+        className={`chat-bubble text-white ${
+          fromMe ? "bg-blue-500" : ""
+        } ${shakeClass}`}
+      >
         {message.message}
       </div>
 
